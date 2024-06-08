@@ -1,73 +1,48 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,700;1,400;1,800&display=swap'); 
-
-html {
-  height: 100vh;
-  width: 100vw;
-}
-
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-.main_container {
-  background-color: hsl(0, 0%, 94%);
-  width: 100%;
-  height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
+/* Definir os estilos das divs específicas, index.css terá os estilos globais */
 .main_content {
+  width: 50vw;
+  height: 80vh;
   background-color: hsl(0, 0%, 100%);
-  width: 50%;
-  height: 80%;
   border-radius: 20px;
   border-bottom-right-radius: 140px;
+  padding: 35px;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  align-items: flex-start;
-  padding: 40px;
-  padding-right: 45px;
+  overflow: hidden;
 }
 
 .input_container {
   display: flex;
-  justify-content: space-around;
-  align-items: flex-start;
+  justify-content: flex-start;
   width: 80%;
+  gap: 15px;
 }
 
 .input_box {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  width: 30%;
+  width: 40%;
+  gap: 6px;
 }
 
 .input_box label {
   color: hsl(0, 1%, 44%);
-  font-size: 13px;
+  font-size: 0.8vw;
   text-transform: uppercase;
-  font-family: "Poppins", sans-serif;
-  font-weight: 400;
-  letter-spacing: 1px;
+  font-weight: 700;
+  letter-spacing: 2px;
 }
 
 .input_box input {
-  width: 100%;
-  padding: 8px;
-  margin-top: 5px;
+  width: 85%;
+  padding: 15px;
+  padding-left: 1.5vw;
   border: 2px solid hsl(0, 0%, 86%);
   border-radius: 5px;
-  font-size: 16px;
   color: hsl(0, 0%, 8%);
-  font-family: "Poppins", sans-serif;
-  font-weight: 700;
-  font-size: 30px;
+  font-weight: 800;
+  font-size: 2vw;
 }
 
 .input_box input::placeholder {
@@ -79,13 +54,16 @@ html {
   color: hsl(0, 0%, 8%);
 }
 
+.error_message_container {
+  height: 1.2em;
+  white-space: nowrap; 
+}
+
 .error_message {
   color: hsl(0, 100%, 67%);
-  margin-top: 5px;
-  font-family: "Poppins", sans-serif;
-  font-weight: 400;
-  font-size:11px; 
+  font-weight: 400; 
   font-style: italic;
+  font-size: 0.85vw; 
 }
 
 .input_box.error label,
@@ -94,12 +72,26 @@ html {
   border-color: hsl(0, 100%, 67%);
 }
 
+.submit_container {
+  margin-top: 2vw;
+  display: flex;
+  position: relative;
+  justify-content: center;
+  width: 100%;
+  align-items: center;
+}
+
+.submit_container .line {
+  border: none;
+  background-color: hsl(0, 0%, 86%);
+  height: 2px;
+  width: 100%;
+}
+
 .submit_button {
-  position: absolute;
-  right: 400px;
-  top: 40%;
-  transform: translateY(-50%);
-  padding: 25px 25px;
+  position: absolute; 
+  right: 0; 
+  padding: 1.5vw;
   background-color: hsl(259, 100%, 65%);
   color: hsl(0, 0%, 100%);
   border: none;
@@ -107,29 +99,28 @@ html {
   cursor: pointer;
 }
 
+.submit_button:hover {
+  background-color: black;
+}
+
 .output_container {
   display: flex;
   flex-direction: column;
-  justify-content: flex-end;
-  align-items: flex-start;
-  height: 285px;
-  width: 90%;
-  font-family: "Poppins", sans-serif;
-  font-weight: 800;
+  flex-grow: 1;
+  justify-content: center;
+  gap: 30px;
+}
+
+.output_container span {
+  width: 100%;
   font-style: italic;
-  font-size: 70px;
-  line-height: 1;
-  border-top: 1px solid hsl(0, 0%, 86%);
+  font-weight: 800;
+  font-size: 7vw; 
+  line-height: 0.8em; 
+  white-space: nowrap;
 }
 
-.output_container p {
-  margin: 0;
-  padding: 5px 0;
-  color: hsl(0, 0%, 8%);
-  font-weight: bold;
-}
-
-.output_container p span {
+.output_container .output {
   color: hsl(259, 100%, 65%);
-  font-weight: bold;
+  font-weight: 800;
 }

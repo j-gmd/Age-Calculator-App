@@ -1,127 +1,167 @@
 import React, { useState, useEffect } from 'react';
 import './App.css';
+import iconArrow from "./assets/images/icon-arrow.svg"
 
-const App = () => {
-  const [day, setDay] = useState('');
-  const [month, setMonth] = useState('');
-  const [year, setYear] = useState('');
-  const [output, setOutput] = useState({ years: '--', months: '--', days: '--' });
-  const [error, setError] = useState({ day: '', month: '', year: '' });
-  const [submitted, setSubmitted] = useState(false);
+// Este componente renderiza um campo de entrada com validação de erro
+const InputBox = ({ id, placeholder, value, onChange, error, submitted }) => (
+  <div className={`input_box ${submitted && error ? 'error' : ''}`}>
+    <label htmlFor={id}>{id}</label>
+    <input
+      type="text"
+      id={id}
+      placeholder={placeholder}
+      value={value}
+      onChange={onChange}
+      className={submitted && error ? 'error' : ''}
+    />
+    <div className="error_message_container">
+      {submitted && error && <span className="error_message">{error}</span>}
+    </div>
+  </div>
+);
 
-  useEffect(() => {
-    validateAndCalculateAge();
-  }, [day, month, year]);
 
-  const validateAndCalculateAge = () => {
-    const currentDate = new Date();
-    const birthDate = new Date(`${year}-${month}-${day}`);
-    const currentYear = currentDate.getFullYear();
-    let errors = { day: '', month: '', year: '' };
-    let hasError = false;
-
-    if (!day) {
-      errors.day = 'This field is required';
-      hasError = true;
-    } else if (day < 1 || day > 31 || isNaN(day)) {
-      errors.day = 'Must be a valid day';
-      hasError = true;
-    }
-
-    if (!month) {
-      errors.month = 'This field is required';
-      hasError = true;
-    } else if (month < 1 || month > 12 || isNaN(month)) {
-      errors.month = 'Must be a valid month';
-      hasError = true;
-    }
-
-    if (!year) {
-      errors.year = 'This field is required';
-      hasError = true;
-    } else if (year > currentYear || isNaN(year)) {
-      errors.year = 'Must be in the past';
-      hasError = true;
-    }
-
-    setError(errors);
-
-    if (hasError) {
-      setOutput({ years: '--', months: '--', days: '--' });
-      return;
-    }
-
-    if (birthDate > currentDate) {
-      errors.year = 'Must be in the past';
+const App = () =>
+  {
+    // Define o estado inicial para dia, mês, ano, saída e erro
+    const [day, setDay] = useState('');
+    const [month, setMonth] = useState('');
+    const [year, setYear] = useState('');
+    const [output, setOutput] = useState({ years: '--', months: '--', days: '--' });
+    const [error, setError] = useState({ day: '', month: '', year: '' });
+    const [submitted, setSubmitted] = useState(false);
+  
+    // Chama validateAndCalculateAge sempre que day, month ou year mudam
+    useEffect(() =>
+    {
+      validateAndCalculateAge();
+    }, [day, month, year]);
+  
+    // Valida os campos de entrada e calcula a idade
+    const validateAndCalculateAge = () =>
+    {
+      // Cria objetos de data para a data atual e a data de nascimento
+      const currentDate = new Date();
+      const birthDate = new Date(`${year}-${month}-${day}`);
+      const currentYear = currentDate.getFullYear();
+      let errors = { day: '', month: '', year: '' };
+      let hasError = false;
+  
+      // Valida o campo do dia
+      if (!day)
+      {
+        errors.day = 'This field is required';
+        hasError = true;
+      } else if (day < 1 || day > 31 || isNaN(day))
+      {
+        errors.day = 'Must be a valid day';
+        hasError = true;
+      }
+  
+      // Valida o campo do mês
+      if (!month)
+      {
+        errors.month = 'This field is required';
+        hasError = true;
+      } else if (month < 1 || month > 12 || isNaN(month))
+      {
+        errors.month = 'Must be a valid month';
+        hasError = true;
+      }
+  
+      // Valida o campo do ano
+      if (!year)
+      {
+        errors.year = 'This field is required';
+        hasError = true;
+      } else if (year > currentYear || isNaN(year))
+      {
+        errors.year = 'Must be in the past';
+        hasError = true;
+      }
+  
       setError(errors);
-      setOutput({ years: '--', months: '--', days: '--' });
-      return;
-    }
-
-    const diffTime = Math.abs(currentDate - birthDate);
-    const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
-    const years = Math.floor(diffDays / 365.25);
-    const months = Math.floor((diffDays % 365.25) / 30);
-    const days = Math.floor((diffDays % 365.25) % 30);
-
-    setOutput({ years, months, days });
-  };
-
-  const handleSubmit = () => {
-    setSubmitted(true);
-    validateAndCalculateAge();
-  };
-
-  return (
-    <div className="main_container">
+  
+      // Se houver um erro, limpa a saída e retorna
+      if (hasError)
+      {
+        setOutput({ years: '--', months: '--', days: '--' });
+        return;
+      }
+  
+      // Se a data de nascimento for no futuro, define um erro e retorna
+      if (birthDate > currentDate)
+      {
+        errors.year = 'Must be in the past';
+        setError(errors);
+        setOutput({ years: '--', months: '--', days: '--' });
+        return;
+      }
+  
+      // Calcula a diferença de tempo entre a data atual e a data de nascimento
+      const diffTime = Math.abs(currentDate - birthDate);
+      const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+      const years = Math.floor(diffDays / 365.25);
+      const months = Math.floor((diffDays % 365.25) / 30);
+      const days = Math.floor((diffDays % 365.25) % 30);
+  
+      // Define a saída para a diferença de tempo calculada
+      setOutput({ years, months, days });
+    };
+  
+    // Define submitted para true e chama validateAndCalculateAge quando o formulário é enviado
+    const handleSubmit = () =>
+    {
+      setSubmitted(true);
+      validateAndCalculateAge();
+    };
+  
+    // Renderiza o formulário e a saída
+    return (
       <div className="main_content">
         <div className="input_container">
-          <div className={`input_box ${submitted && error.day ? 'error' : ''}`}>
-            <label htmlFor="day">Day</label>
-            <input
-              type="text"
-              id="day"
-              placeholder="DD"
-              value={day}
-              onChange={(e) => setDay(e.target.value)}
-              className={submitted && error.day ? 'error' : ''}
-            />
-            {submitted && error.day && <span className="error_message">{error.day}</span>}
-          </div>
-          <div className={`input_box ${submitted && error.month ? 'error' : ''}`}>
-            <label htmlFor="month">Month</label>
-            <input
-              type="text"
-              id="month"
-              placeholder="MM"
-              value={month}
-              onChange={(e) => setMonth(e.target.value)}
-              className={submitted && error.month ? 'error' : ''}
-            />
-            {submitted && error.month && <span className="error_message">{error.month}</span>}
-          </div>
-          <div className={`input_box ${submitted && error.year ? 'error' : ''}`}>
-            <label htmlFor="year">Year</label>
-            <input
-              type="text"
-              id="year"
-              placeholder="YYYY"
-              value={year}
-              onChange={(e) => setYear(e.target.value)}
-              className={submitted && error.year ? 'error' : ''}
-            />
-            {submitted && error.year && <span className="error_message">{error.year}</span>}
-          </div>
-          <button onClick={handleSubmit} className="submit_button">Submit</button>
+
+          <InputBox 
+            id="DAY" 
+            placeholder="DD" 
+            value={day} 
+            onChange={(e) => setDay(e.target.value)} 
+            error={error.day} 
+            submitted={submitted} 
+          />
+
+          <InputBox 
+            id="MONTH"
+            placeholder="MM" 
+            value={month} 
+            onChange={(e) => setMonth(e.target.value)} 
+            error={error.month} 
+            submitted={submitted} 
+          />
+
+          <InputBox 
+            id="YEAR" 
+            placeholder="YYYY" 
+            value={year} 
+            onChange={(e) => setYear(e.target.value)} 
+            error={error.year} 
+            submitted={submitted}
+          />
+          
+        </div>
+        <div className='submit_container'>
+          <hr className='line'/>
+          <button onClick={handleSubmit} className="submit_button">
+            <img src={iconArrow} alt="submit-image"/>
+          </button>
         </div>
         <div className="output_container">
-          <p><span>{output.years}</span> years</p>
-          <p><span>{output.months}</span> months</p>
-          <p><span>{output.days}</span> days</p>
+          <span> <span className='output'>{output.years}</span> years</span> 
+          <span> <span className='output'>{output.months}</span> months</span>
+          <span> <span className='output'>{output.days} </span> days</span>
         </div>
       </div>
-    </div>
-  );
-};
-
-export default App;
+    );
+  };
+  
+  export default App;
