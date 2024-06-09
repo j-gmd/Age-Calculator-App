@@ -46,13 +46,14 @@ const App = () =>
       const currentYear = currentDate.getFullYear();
       let errors = { day: '', month: '', year: '' };
       let hasError = false;
+      let isBissextile = ((year%4===0) && (year%100 !== 0) || year % 400 === 0);
   
       // Valida o campo do dia
       if (!day)
       {
         errors.day = 'This field is required';
         hasError = true;
-      } else if (day < 1 || day > 31 || isNaN(day))
+      } else if (day < 1 || day > 31 || isNaN(day) || (month==2 && day>28 && !isBissextile) || (month==2 && day>29 && isBissextile))
       {
         errors.day = 'Must be a valid day';
         hasError = true;
@@ -101,10 +102,10 @@ const App = () =>
       // Calcula a diferença de tempo entre a data atual e a data de nascimento
       const diffTime = Math.abs(currentDate - birthDate);
       const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
-      const years = Math.floor(diffDays / 365.25);
-      const months = Math.floor((diffDays % 365.25) / 30);
-      const days = Math.floor((diffDays % 365.25) % 30);
-  
+      const years = Math.floor(diffDays / 365);
+      const months = Math.floor((diffDays % 365) / 30) ;
+      const days = Math.floor((diffDays % 365) % 30);
+
       // Define a saída para a diferença de tempo calculada
       setOutput({ years, months, days });
     };

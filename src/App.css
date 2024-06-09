@@ -1,7 +1,51 @@
 /* Definir os estilos das divs específicas, index.css terá os estilos globais */
+
+
+
+@media screen and (max-width: 960px) {
+  .main_content{
+    width: 480px;
+  }
+  .input_box label{
+    font-size: 12px;
+  }
+  .input_box input{
+    font-size: 19px;
+  }
+  .error_message{
+    font-size: 10px;
+  }
+  .output_container span{
+    font-size: 67px;
+  }
+  .submit_button{
+    right: 170px;
+  }
+}
+
+@media screen and (min-width:961px) {
+  .main_content{
+    width: 50vw;
+  }
+  .input_box label{
+    font-size: 1.25vw;
+  }
+  .input_box input{
+    font-size: 2vw;
+  }
+  .error_message{
+    font-size: 1vw;
+  }
+  .output_container span{
+    font-size: 7vw;
+  }
+  .submit_button{
+    right: 0;
+  }
+}
+
 .main_content {
-  width: 50vw;
-  height: 80vh;
+  height: 70vh;
   background-color: hsl(0, 0%, 100%);
   border-radius: 20px;
   border-bottom-right-radius: 140px;
@@ -28,7 +72,6 @@
 
 .input_box label {
   color: hsl(0, 1%, 44%);
-  font-size: 0.8vw;
   text-transform: uppercase;
   font-weight: 700;
   letter-spacing: 2px;
@@ -42,7 +85,6 @@
   border-radius: 5px;
   color: hsl(0, 0%, 8%);
   font-weight: 800;
-  font-size: 2vw;
 }
 
 .input_box input::placeholder {
@@ -63,7 +105,6 @@
   color: hsl(0, 100%, 67%);
   font-weight: 400; 
   font-style: italic;
-  font-size: 0.85vw; 
 }
 
 .input_box.error label,
@@ -73,7 +114,7 @@
 }
 
 .submit_container {
-  margin-top: 2vw;
+  margin-top: 30px;
   display: flex;
   position: relative;
   justify-content: center;
@@ -90,7 +131,6 @@
 
 .submit_button {
   position: absolute; 
-  right: 0; 
   padding: 1.5vw;
   background-color: hsl(259, 100%, 65%);
   color: hsl(0, 0%, 100%);
@@ -115,7 +155,6 @@
   width: 100%;
   font-style: italic;
   font-weight: 800;
-  font-size: 7vw; 
   line-height: 0.8em; 
   white-space: nowrap;
 }
