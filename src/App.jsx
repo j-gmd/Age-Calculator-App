@@ -49,14 +49,35 @@ const App = () =>
       let isBissextile = ((year%4===0) && (year%100 !== 0) || year % 400 === 0);
   
       // Valida o campo do dia
-      if (!day)
-      {
+      // Valida o campo do dia
+      // Valida o campo do dia
+      if (!day) {
         errors.day = 'This field is required';
         hasError = true;
-      } else if (day < 1 || day > 31 || isNaN(day) || (month==2 && day>28 && !isBissextile) || (month==2 && day>29 && isBissextile))
-      {
-        errors.day = 'Must be a valid day';
-        hasError = true;
+      } else {
+          // Verifica se o dia é um número entre 1 e 31
+          if (day < 1 || day > 31 || isNaN(day)) {
+            errors.day = 'Must be a valid day';
+            hasError = true;
+          }
+
+          // Verifica se o mês é fevereiro e se o dia é maior que 28 (para anos não bissextos)
+          else if (month == 2 && day > 28 && !isBissextile) {
+            errors.day = 'Must be a valid day';
+            hasError = true;
+          }
+
+          // Verifica se o mês é fevereiro e se o dia é maior que 29 (para anos bissextos)
+          else if (month == 2 && day > 29 && isBissextile) {
+            errors.day = 'Must be a valid day';
+            hasError = true;
+          }
+
+          // Verifica se o mês tem 30 dias e se o dia é maior que 30
+          else if ((month == 4 || month == 6 || month == 9 || month == 11) && day > 30) {
+            errors.day = 'Must be a valid day';
+            hasError = true;
+          }
       }
   
       // Valida o campo do mês
